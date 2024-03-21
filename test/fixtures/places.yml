@@ -1,19 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  uf: MyString
-  city: MyString
-  district: MyString
-  address: MyString
-  phone: MyString
-  website: MyString
+  name: Arena do Grêmio
+  uf: RS
+  city: Porto Alegre
+  district: Humaitá
+  address: Av. Padre Leopoldo Brentano, 110
+  phone: 555130929605
+  website: https://arenapoa.com.br/
 
 two:
-  name: MyString
-  uf: MyString
-  city: MyString
-  district: MyString
-  address: MyString
-  phone: MyString
-  website: MyString
+  name: Beira Lixo
+  uf: RS
+  city: Porto Alegre
+  district: Praia de Belas
+  address: Av. Padre Cacique, 891
+  phone: 555137791700
+  website: https://estadiobeirario.com.br/

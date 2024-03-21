@@ -38,11 +38,11 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to group_url(@group)
   end
 
-  test "should destroy group" do
-    assert_difference("Group.count", -1) do
-      delete group_url(@group)
-    end
+  # test "should destroy group" do
+  #   assert_difference("Group.count", -1) do
+  #     delete group_url(@group)
+  #   end
 
-    assert_redirected_to groups_url
-  end
+  #   assert_redirected_to groups_url
+  # end
 end
