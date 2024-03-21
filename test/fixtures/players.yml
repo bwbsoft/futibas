@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group: one
+  name: MyString
+  notes: MyString
+  phone: MyString
+  level: 1
+  skills: 
+
+two:
+  group: two
+  name: MyString
+  notes: MyString
+  phone: MyString
+  level: 1
+  skills: 
