@@ -8,6 +8,7 @@ class CreatePlaces < ActiveRecord::Migration[7.1]
       t.string :address, index: true
       t.string :phone, index: true
       t.string :website, index: true
+      t.string :instagram, index: true
 
       t.timestamps
     end
