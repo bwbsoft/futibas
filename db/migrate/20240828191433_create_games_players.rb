@@ -1,10 +1,10 @@
-class CreateMatchPlayers < ActiveRecord::Migration[7.1]
+class CreateGamesPlayers < ActiveRecord::Migration[7.1]
   def change
-    create_table :match_players do |t|
-      t.references :match, null: false, foreign_key: true
+    create_table :games_players do |t|
+      t.references :game, null: false, foreign_key: true
       t.references :player, null: false, foreign_key: true
 
-      t.enum :team, enum_type: :match_teams, null: false, default: 'no_team'
+      t.enum :team, enum_type: :game_teams, null: false, default: 'no_team'
 
       t.integer :goals, default: 0
       t.integer :assists, default: 0

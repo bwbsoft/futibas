@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :uuid             not null, primary key
+#  cpf             :string
+#  email           :string           not null
+#  instagram       :string
+#  name            :string           not null
+#  password_digest :string           not null
+#  phone           :string
+#  picture         :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_cpf        (cpf) UNIQUE
+#  index_users_on_email      (email) UNIQUE
+#  index_users_on_instagram  (instagram)
+#  index_users_on_phone      (phone)
+#
 class User < ApplicationRecord
   include NormalizeCpf
   

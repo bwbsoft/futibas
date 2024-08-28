@@ -1,8 +1,8 @@
 class CreatePlayers < ActiveRecord::Migration[7.1]
   def change
     create_table :players do |t|
-      t.references :group, null: false, foreign_key: true
-      t.references :user, null: true, foreign_key: true
+      t.references :group, null: false, foreign_key: true, type: :uuid
+      t.references :user, null: true, foreign_key: true, type: :uuid
       
       t.string :name, null: false, index: true
       t.string :nickname
