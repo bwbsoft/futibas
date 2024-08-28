@@ -20,5 +20,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Group < ApplicationRecord
-  has_many :players
+  has_many :players, dependent: :restrict_with_error
+  has_many :games, dependent: :restrict_with_error
+  belongs_to :user
 end

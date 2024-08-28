@@ -10,6 +10,7 @@
 #  password_digest :string           not null
 #  phone           :string
 #  picture         :string
+#  role            :integer          default(0)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -25,8 +26,12 @@ class User < ApplicationRecord
   
   has_secure_password
 
+  enum role: { player: 0, admin: 1 }
+
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true
   validates :cpf, presence: true, uniqueness: true
+
+  has_many :groups, dependent: :restrict_with_error
 end

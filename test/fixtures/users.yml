@@ -10,6 +10,7 @@
 #  password_digest :string           not null
 #  phone           :string
 #  picture         :string
+#  role            :integer          default(0)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
