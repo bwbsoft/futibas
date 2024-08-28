@@ -81,7 +81,7 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: futapp_production
-  username: futapp
-  password: <%= ENV["FUTAPP_DATABASE_PASSWORD"] %>
+  encoding: utf8
+  pool: 15
+  adapter: postgresql
+  schema_search_path: "public"
