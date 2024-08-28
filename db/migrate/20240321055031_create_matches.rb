@@ -5,6 +5,7 @@ class CreateMatches < ActiveRecord::Migration[7.1]
     create_table :matches do |t|
       t.references :group, null: false, foreign_key: true
       t.references :place, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: true
 
       t.status :status, default: 0
       
