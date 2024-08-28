@@ -7,7 +7,7 @@ class CreateGroups < ActiveRecord::Migration[7.1]
       
       t.string :discord_webhook_url
 
-      t.references :user, null: true, foreign_key: true, type: :uuid
+      t.references :user, null: false, foreign_key: true, type: :uuid
 
       t.timestamps
     end

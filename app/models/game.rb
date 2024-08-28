@@ -41,7 +41,8 @@ class Game < ApplicationRecord
   belongs_to :user
   belongs_to :mvp, class_name: 'Player', optional: true
   belongs_to :greatest_impact, class_name: 'Player', optional: true
-  has_many :match_players, dependent: :restrict_with_error
+  has_many :game_players, dependent: :restrict_with_error
+  has_many :players, through: :game_players
 
   enum status: { scheduled: 0, ongoing: 1, processing: 2, finished: 3 }
 end

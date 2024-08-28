@@ -1,4 +1,4 @@
-<div id="<%= dom_id group %>">
+<div id="<%= dom_id @group %>">
   <p>
     <strong>Name:</strong>
     <%= group.name %>
@@ -8,5 +8,39 @@
     <strong>Notes:</strong>
     <%= group.notes %>
   </p>
+
+  <table border="1">
+    <tr>
+      <th>Name</th>
+      <th>Notes</th>
+      <th>Phone</th>
+      <th>points</th>
+    </tr>
+    <% @group.players.each do |player| %>
+      <tr>
+        <td><%= player.name %></td>
+        <td><%= player.notes %></td>
+        <td><%= player.phone %></td>
+        <td><%= player.picture %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <table border="1">
+    <tr>
+      <th>Date</th>
+      <th>Title</th>
+      <th>Place</th>
+      <th>Players</th>
+    </tr>
+    <% @group.games.each do |game| %>
+      <tr>
+        <td><%= game.date.strftime('%d/%m/%Y %H:%M') %></td>
+        <td><%= game.title %></td>
+        <td><%= game.place.name %></td>
+        <td><%= game.players.count %></td>
+      </tr>
+    <% end %>
+  </table>
 
 </div>

@@ -1,0 +1,17 @@
+<h1>Bem vindo! <%= current_user.name %></h1>
+<h4>Meus Grupos</h4>
+
+<table border="1">
+  <tr>
+    <td>Nome</td>
+    <td>#</td>
+  </tr>
+  <% current_user.groups.each do |group| %>
+    <tr>
+      <td><%= group.name %></td>
+      <td><%= link_to "Exibir", group %></td>
+    </tr>
+  <% end %>
+</table>
+<br>
+<%= link_to "New group", new_group_path %>
