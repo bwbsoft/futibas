@@ -1,4 +1,22 @@
 Rails.application.routes.draw do
+  devise_for :users, path: 'auth', controllers: {
+    sessions: 'auth/sessions',
+    registrations: 'auth/registrations',
+    passwords: 'auth/passwords',
+    confirmations: 'auth/confirmations',
+    unlocks: 'auth/unlocks'
+  }
+  devise_scope :user do
+    authenticated :user do
+      root 'dashboard#home', as: :authenticated_root
+    end
+
+    unauthenticated do
+      root 'devise/sessions#new', as: :unauthenticated_root
+    end
+
+    get 'auth/sign_out', to: 'devise/sessions#destroy', as: :sign_out
+  end
   # resources :matches
   # resources :players
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -8,12 +26,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "auth#login"
 
 
-  resources :users
+  # resources :users
   resources :places
   resources :groups
-
-  get 'dashboard', to: 'dashboard#home'
 end
