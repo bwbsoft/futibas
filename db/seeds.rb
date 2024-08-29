@@ -9,8 +9,8 @@
 #   end
 
 # Create a user
-admin = User.create(name: "Admin", email: "admin@dev.com", password_digest: "admin", cpf: "066.207.627-35", role: :admin) # CPF is Fake
-user = User.create(name: "User", email: "user@dev.com", password_digest: "user", cpf: "678.694.022-65", role: :player) # CPF is Fake
+admin = User.create(name: "Admin", email: "admin@dev.com", password: "teste1234", cpf: "066.207.627-35", role: :admin) # CPF is Fake
+user = User.create(name: "User", email: "user@dev.com", password: "teste1234", cpf: "678.694.022-65", role: :player) # CPF is Fake
 group = Group.create(name: "Soccer", user: user, notes: "Soccer group")
 
 places = [
@@ -41,7 +41,7 @@ places = [
     district: 'São João',
     address: 'Av. Ceará, 561',
     phone: '555133603030',
-    website: 'https://www.soccercitypoa.com.br/',
+    website: 'https://biolink.info/abombonera',
     instagram: 'abomboneraquadras',
   ),
 ]
