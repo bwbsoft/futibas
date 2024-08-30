@@ -9,19 +9,24 @@
     <%= group.notes %>
   </p>
 
+  <p>
+    <strong>Participantes:</strong>
+    <%= group.players.count %>
+  </p>
+
   <table border="1">
     <tr>
-      <th>Name</th>
-      <th>Notes</th>
-      <th>Phone</th>
-      <th>points</th>
+      <th>Nome</th>
+      <th>Apelido</th>
+      <th>Actions</th>
     </tr>
     <% @group.players.each do |player| %>
       <tr>
         <td><%= player.name %></td>
-        <td><%= player.notes %></td>
-        <td><%= player.phone %></td>
-        <td><%= player.picture %></td>
+        <td><%= player.nickname %></td>
+        <td>
+          <%= link_to 'Show', group_player_path(@group, player) %>
+        </td>
       </tr>
     <% end %>
   </table>
@@ -32,6 +37,7 @@
       <th>Title</th>
       <th>Place</th>
       <th>Players</th>
+      <th>Actions</th>
     </tr>
     <% @group.games.each do |game| %>
       <tr>
@@ -39,6 +45,9 @@
         <td><%= game.title %></td>
         <td><%= game.place.name %></td>
         <td><%= game.players.count %></td>
+        <td>
+          <%= link_to 'Show', group_game_path(@group, game) %>
+        </td>
       </tr>
     <% end %>
   </table>

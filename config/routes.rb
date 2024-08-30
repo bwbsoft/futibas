@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     confirmations: 'auth/confirmations',
     unlocks: 'auth/unlocks'
   }
+  root to: 'dashboard#home'
   devise_scope :user do
     authenticated :user do
       root 'dashboard#home', as: :authenticated_root
@@ -27,8 +28,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 
-
+  draw :groups
   # resources :users
   resources :places
-  resources :groups
 end
