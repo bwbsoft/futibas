@@ -1,16 +1,25 @@
-<h2>Forgot your password?</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="card rounded-3 shadow-sm w-100">
+  <div class="card-header py-3">
+    <h4 class="my-0 fw-normal">Esqueci minha senha</h4>
   </div>
+  <div class="card-body">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
+      <div class="field form-group">
+        <%= f.label :email, class: 'form-label' %><br />
+        <div class="input-icon text-primary">
+          <%= bootstrap_icon 'envelope-fill', style: 'height: 18px;width: auto;top: -2px;position: relative;' %>
+        </div>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'nome@email.com', class: 'form-control' %>
+      </div>
+
+
+      <div class="actions">
+        <%= f.submit "Enviar e-mail", class: 'btn btn-primary btn-lg btn-block mt-2' %>
+      </div>
+    <% end %>
+
+    <% render "devise/shared/links" %>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
