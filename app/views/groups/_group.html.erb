@@ -14,22 +14,7 @@
     <%= group.players.count %>
   </p>
 
-  <table border="1">
-    <tr>
-      <th>Nome</th>
-      <th>Apelido</th>
-      <th>Actions</th>
-    </tr>
-    <% @group.players.each do |player| %>
-      <tr>
-        <td><%= player.name %></td>
-        <td><%= player.nickname %></td>
-        <td>
-          <%= link_to 'Show', group_player_path(@group, player) %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
+
 
   <table border="1">
     <tr>

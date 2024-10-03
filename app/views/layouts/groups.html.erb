@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Futapp</title>
+    <title>FutApp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -14,12 +14,12 @@
     <header class="">
       <%= render 'layouts/components/main_header' %>
       <div class="line-primary"></div>
+       <%= render 'layouts/components/sub_header_dashboard' %>
     </header>
-    <h1>Futapp - Tutstuts</h1>
-    
-    <hr>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container">
+      <%= yield %>
+    </main>
   </body>
 </html>

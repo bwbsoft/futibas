@@ -1,0 +1,30 @@
+<table class="table">
+  <tr>
+    <th>Nome</th>
+    <th>Apelido</th>
+    <th>Partidas</th>
+    <th>Vitórias</th>
+    <th>Empates</th>
+    <th>Derrotas</th>
+    <th>Gols</th>
+    <th>Assistências</th>
+    <th>Defesas</th>
+    <th>Pontos</th>
+    <th></th>
+  </tr>
+  <% @group.players.each do |player| %>
+    <tr>
+      <td><%= player.nickname || player.name %></td>
+      <td><%= player.nickname %></td>
+      <td><%= player.matches_played %></td>
+      <td><%= player.matches_won %></td>
+      <td><%= player.matches_drawn %></td>
+      <td><%= player.matches_lost %></td>
+      <td><%= player.goals %></td>
+      <td><%= player.assists %></td>
+      <td><%= player.saves %></td>
+      <td><%= player.points %></td>
+      <td><%= link_to 'Show', group_player_path(@group, player) %></td>
+    </tr>
+  <% end %>
+</table>

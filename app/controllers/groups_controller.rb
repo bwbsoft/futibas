@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+  layout "dashboard"
   before_action :set_group, only: %i[ show edit update destroy ]
 
   # GET /groups or /groups.json
@@ -8,6 +9,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/1 or /groups/1.json
   def show
+    @page_title = @group.name
   end
 
   # GET /groups/new
@@ -22,6 +24,7 @@ class GroupsController < ApplicationController
   # POST /groups or /groups.json
   def create
     @group = Group.new(group_params)
+    @group.user = current_user
 
     respond_to do |format|
       if @group.save
