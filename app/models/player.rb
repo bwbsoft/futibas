@@ -48,4 +48,7 @@
 #
 class Player < ApplicationRecord
   belongs_to :group
+  has_many :game_data, class_name: 'GamePlayer', dependent: :restrict_with_error
+  
+  validates :cpf, uniqueness: true, allow_nil: true
 end

@@ -15,10 +15,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_29_034305) do
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  # Custom types defined in this database.
-  # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "game_teams", ["a", "b", "no_team"]
-
   create_table "games", force: :cascade do |t|
     t.uuid "group_id", null: false
     t.bigint "place_id", null: false
@@ -27,7 +23,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_29_034305) do
     t.string "title", null: false
     t.datetime "date", precision: nil
     t.string "notes"
-    t.enum "winner_team", default: "no_team", null: false, enum_type: "game_teams"
+    t.integer "winner_team", default: 0, null: false
     t.integer "team_a_score", default: 0
     t.integer "team_b_score", default: 0
     t.bigint "mvp_id"
@@ -45,7 +41,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_29_034305) do
   create_table "games_players", force: :cascade do |t|
     t.bigint "game_id", null: false
     t.bigint "player_id", null: false
-    t.enum "team", default: "no_team", null: false, enum_type: "game_teams"
+    t.integer "team", default: 0, null: false
     t.integer "goals", default: 0
     t.integer "assists", default: 0
     t.integer "saves", default: 0

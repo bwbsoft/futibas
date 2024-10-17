@@ -9,7 +9,7 @@
 #  team_a_score       :integer          default(0)
 #  team_b_score       :integer          default(0)
 #  title              :string           not null
-#  winner_team        :enum             default("no_team"), not null
+#  winner_team        :integer          default("none"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  greatest_impact_id :bigint

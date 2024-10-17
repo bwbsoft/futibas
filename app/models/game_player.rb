@@ -12,7 +12,7 @@
 #  points       :integer          default(0)
 #  red_cards    :integer          default(0)
 #  saves        :integer          default(0)
-#  team         :enum             default("no_team"), not null
+#  team         :integer          default("none"), not null
 #  yellow_cards :integer          default(0)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -34,4 +34,6 @@ class GamePlayer < ApplicationRecord
 
   belongs_to :game
   belongs_to :player
+
+  enum team: [:no_team, :a, :b], _default: :no_team
 end

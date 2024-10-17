@@ -4,7 +4,7 @@ class CreateGamesPlayers < ActiveRecord::Migration[7.1]
       t.references :game, null: false, foreign_key: true
       t.references :player, null: false, foreign_key: true
 
-      t.enum :team, enum_type: :game_teams, null: false, default: 'no_team'
+      t.integer :team, null: false, default: 0
 
       t.integer :goals, default: 0
       t.integer :assists, default: 0

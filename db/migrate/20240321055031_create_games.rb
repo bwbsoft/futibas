@@ -1,7 +1,5 @@
 class CreateGames < ActiveRecord::Migration[7.1]
   def change
-    create_enum :game_teams, ['a', 'b', 'no_team']
-
     create_table :games do |t|
       t.references :group, null: false, foreign_key: true, type: :uuid
       t.references :place, null: false, foreign_key: true
@@ -13,7 +11,7 @@ class CreateGames < ActiveRecord::Migration[7.1]
       t.timestamp :date
       t.string :notes
 
-      t.enum :winner_team, enum_type: :game_teams, null: false, default: 'no_team'
+      t.integer :winner_team, null: false, default: 0
       t.integer :team_a_score, default: 0
       t.integer :team_b_score, default: 0
 

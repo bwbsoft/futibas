@@ -1,4 +1,4 @@
-<div id="sub-header-dashboard" class="bg-secondary pt-2 pb-2" style="background-color: #f7f8fb!important;   border-bottom: 1px solid #e7ebf3;">
+<div id="sub-header-dashboard" class="bg-secondary pt-2 pb-2" style="background-color: #f7f8fb!important;  border-bottom: 1px solid #e7ebf3;">
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-md-4 d-flex justify-content-start">
@@ -14,9 +14,9 @@
         
       </div>
       <div class="col-md-4 d-flex justify-content-end">
-        <% if @groups %>
+        <% if @groups.present? %>
           <%= link_to "Novo Grupo", new_group_path, class: 'drop-down__toggle hk-button--secondary pr1' %>
-        <% elsif @group %>
+        <% elsif @group && !!@group.try(:id) && !request.path.include?('/new') %>
           <%= link_to "Novo Evento", new_group_player_path, class: 'drop-down__toggle hk-button--secondary pr1' %>
           <%= link_to "Novo Jogador", new_group_player_path, class: 'drop-down__toggle hk-button--secondary pr1' %>
         <% end %>

@@ -1,3 +1,11 @@
 <div id="<%= dom_id @game %>">
-  <%= @game.date %>
+  <%= datetime_formatter(@game.date) %>
+
+  <turbo-frame id="game_players_selector_<%= @game.id %>">
+    <%= render 'groups/games/players_selector', group: @group, game: @game %>
+  </turbo-frame>
+
+  <turbo-frame id="game_players_<%= @game.id %>">
+    <%= render 'groups/games/players_list', players: @game.players %>
+  </turbo-frame>
 </div>

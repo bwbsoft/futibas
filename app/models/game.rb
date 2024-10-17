@@ -9,7 +9,7 @@
 #  team_a_score       :integer          default(0)
 #  team_b_score       :integer          default(0)
 #  title              :string           not null
-#  winner_team        :enum             default("no_team"), not null
+#  winner_team        :integer          default("none"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  greatest_impact_id :bigint
@@ -44,5 +44,6 @@ class Game < ApplicationRecord
   has_many :game_players, dependent: :restrict_with_error
   has_many :players, through: :game_players
 
-  enum status: { scheduled: 0, ongoing: 1, processing: 2, finished: 3 }
+  enum status: [:enqueued, :playing, :processing, :finished], _default: :awaiting
+  enum winner_team: [:no_team, :a, :b], _default: :no_team
 end

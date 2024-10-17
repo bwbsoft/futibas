@@ -1,0 +1,14 @@
+<%
+  player_list = group.players.where.not(id: game.game_players.pluck(:player_id)).distinct(:id)
+  players_select_data = options_for_select(player_list.map { |player| [
+    (player.nickname.present? ? "#{player.nickname} (#{player.name})" : player.name), player.id
+  ] })
+%>
+<div class="row">
+  <div class="col-md-8">
+    <%= select_tag :add_player_id, (players_select_data), {prompt: 'Selecione um jogador', data: {controller: 'slim'}}  %>
+  </div>
+  <div class="col-md-4">
+    <%= button_tag 'Adicionar', class: 'btn btn-primary', data: {'group-id': group.id, 'game-id': game.id, controller: 'game', action: 'click->game#addPlayer'} %>
+  </div>
+</div>

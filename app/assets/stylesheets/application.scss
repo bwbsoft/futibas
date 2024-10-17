@@ -13,10 +13,12 @@
  *= require font-awesome
  *
  */
+ @import "lib/slim_select2_4_5";
  @import "./bootstrap_customs.scss";
  @import "bootstrap";
  @import "font-awesome";
- @import "./purple3.css";
+ @import "purple3.scss";
+ @import "personal.scss";
 
 //  herokucss.scss
 @font-face {

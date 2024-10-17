@@ -1,0 +1,31 @@
+ <ul>
+  <% players.joins(:game_data).where(game_data: { team: :no_team }).each do |player| %>
+    <li>
+      <%= link_to (player.nickname || player.name), group_player_path(player.group, player) %>
+      <%= button_tag 'Remover', class: 'btn btn-danger', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, controller: 'game', action: 'click->game#removePlayer'} %>
+      <%= button_tag 'A', class: 'btn btn-success', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+      <%= button_tag 'B', class: 'btn btn-info', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+    </li>
+  <% end %>
+  <br>
+  Time A <br>
+  <% players.joins(:game_data).where(game_data: { team: :a }).each do |player| %>
+    <li>
+      <%= link_to (player.nickname || player.name), group_player_path(player.group, player) %>
+      <%= button_tag 'Remover', class: 'btn btn-danger', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, controller: 'game', action: 'click->game#removePlayer'} %>
+      <%= button_tag 'A', class: 'btn btn-success', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+      <%= button_tag 'B', class: 'btn btn-info', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+    </li>
+  <% end %>
+
+  <br>
+  Time B <br>
+  <% players.joins(:game_data).where(game_data: { team: :b }).each do |player| %>
+    <li>
+      <%= link_to (player.nickname || player.name), group_player_path(player.group, player) %>
+      <%= button_tag 'Remover', class: 'btn btn-danger', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, controller: 'game', action: 'click->game#removePlayer'} %>
+      <%= button_tag 'A', class: 'btn btn-success', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+      <%= button_tag 'B', class: 'btn btn-info', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+    </li>
+  <% end %>
+</ul>

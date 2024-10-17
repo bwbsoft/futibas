@@ -1,8 +1,10 @@
-class Groups::PlayersController < ApplicationController
+class Groups::PlayersController < GroupsControllerBase
   before_action :set_player, only: %i[ show ]
+  before_action :set_group, only: %i[ index new create edit update destroy ]
 
   def index
-    @players = Player.all
+    @players = @group.players
+    render 'groups/players/index'
   end
 
   # GET /groups/1 or /groups/1.json
@@ -14,6 +16,7 @@ class Groups::PlayersController < ApplicationController
   # GET /groups/new
   def new
     @player = Player.new
+    render 'groups/players/new'
   end
 
   # GET /groups/1/edit
@@ -23,11 +26,13 @@ class Groups::PlayersController < ApplicationController
   # POST /groups or /groups.json
   def create
     @player = Player.new(player_params)
-    @player.user = current_user
+    @player.group = @group
+    @player.picture = Faker::Avatar.image
+    @player.cpf = nil if @player.cpf.blank?
 
     respond_to do |format|
       if @player.save
-        format.html { redirect_to player_url(@player), notice: "player was successfully created." }
+        format.html { redirect_to group_players_url(@group, @player), notice: "player was successfully created." }
         format.json { render :show, status: :created, location: @player }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +44,7 @@ class Groups::PlayersController < ApplicationController
   # PATCH/PUT /groups/1 or /groups/1.json
   def update
     respond_to do |format|
-      if @group.update(player)
+      if @player.update(player_params)
         format.html { redirect_to group_url(@player), notice: "player was successfully updated." }
         format.json { render :show, status: :ok, location: @player }
       else
@@ -66,6 +71,6 @@ class Groups::PlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:group).permit(:name, :notes)
+    params.require(:player).permit(:name, :nickname, :cpf, :email, :phone, :instagram, :notes)
   end 
 end
