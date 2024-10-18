@@ -74,4 +74,18 @@ export default class extends Controller {
       console.log(e)
     }
   }
+
+  copyTeamsToClipboard() {
+    let str = `*Time A*\n\n`;
+    document.getElementById('team_a_players_table').querySelectorAll('.player-name').forEach((e, i) => {
+      str += `*${i + 1} -* ${e.innerText}\n`;
+    })
+    str += `\n*Time B*\n\n`;
+    document.getElementById('team_b_players_table').querySelectorAll('.player-name').forEach((e, i) => {
+      str += `*${i + 1} -* ${e.innerText}\n`;
+    })
+
+    navigator.clipboard.writeText(str)
+    console.log(str)
+  }
 }
