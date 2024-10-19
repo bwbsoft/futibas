@@ -26,7 +26,7 @@ export default class extends Controller {
   }
 
   removePlayer() {
-    alert('removePlayer')
+    console.log('removePlayer')
     try{
       const playerId = this.element.dataset.playerId
       if(playerId == "") return alert('Please enter a player id')
@@ -76,11 +76,18 @@ export default class extends Controller {
   }
 
   copyTeamsToClipboard() {
-    let str = `*Time A*\n\n`;
+    let str = ''
+    const place = document.getElementById('game-place').innerText
+    const date = document.getElementById('game-time').innerText
+    
+    str += `*Local:* ${place}\n*${date}*\n`
+    str += '---------------'
+
+    str += `\n*Time A*\n`;
     document.getElementById('team_a_players_table').querySelectorAll('.player-name').forEach((e, i) => {
       str += `*${i + 1} -* ${e.innerText}\n`;
     })
-    str += `\n*Time B*\n\n`;
+    str += `\n*Time B*\n`;
     document.getElementById('team_b_players_table').querySelectorAll('.player-name').forEach((e, i) => {
       str += `*${i + 1} -* ${e.innerText}\n`;
     })

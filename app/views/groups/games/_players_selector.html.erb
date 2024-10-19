@@ -5,10 +5,10 @@
   ] })
 %>
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-9">
     <%= select_tag :add_player_id, (players_select_data), {prompt: 'Selecione um jogador', data: {controller: 'slim'}}  %>
   </div>
-  <div class="col-md-4">
-    <%= button_tag 'Adicionar', class: 'btn btn-primary', data: {'group-id': group.id, 'game-id': game.id, controller: 'game', action: 'click->game#addPlayer'} %>
+  <div class="col-md-3">
+    <%= button_tag 'Adicionar Jogador', class: 'btn btn-light text-primary w-100', data: {'group-id': group.id, 'game-id': game.id, controller: 'game', action: 'click->game#addPlayer'} %>
   </div>
 </div>

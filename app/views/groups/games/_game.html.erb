@@ -1,11 +1,16 @@
 <div id="<%= dom_id @game %>">
-  <%= datetime_formatter(@game.date) %>
 
-  <turbo-frame id="game_players_selector_<%= @game.id %>">
-    <%= render 'groups/games/players_selector', group: @group, game: @game %>
-  </turbo-frame>
+  <div class="w-100 rounded bg-dark text-white p-3 game-banner1" style="position: relative">
+    <%= button_tag  bootstrap_icon('files'), class: 'btn btn-primary', style: "position: absolute; right: 10px; top: 10px", data: {controller: 'game', action: 'click->game#copyTeamsToClipboard'} %>
+    <h1 id="game-time" class="text-white" class="d-flex align-items-center" style="font-weight: 700"><%= datetime_formatter(@game.date) %></h1>
+    <h5 id="game-place" class="text-white" class="d-flex align-items-center", style="font-weight: 700">🏟️ <%= @game.place.name %></h5>
+    <h6 id="game-place-address" class="text-white" class="d-flex align-items-center">📍 <%= @game.place.address %></h6>
+    <turbo-frame id="game_players_selector_<%= @game.id %>">
+      <%= render 'groups/games/players_selector', group: @group, game: @game %>
+    </turbo-frame>
+  </div>
 
-  <turbo-frame id="game_players_<%= @game.id %>">
+  <turbo-frame id="game_players_<%= @game.id %>" data-turbo-action="advance">
     <%= render 'groups/games/players_list', players: @game.players %>
   </turbo-frame>
 </div>

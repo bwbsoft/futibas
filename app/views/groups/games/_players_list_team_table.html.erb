@@ -1,5 +1,5 @@
 <%
-  team_players = game.players.joins(:game_data).where(game_data: { team: team })
+  team_players = game.game_players.where(team: team )
 %>
 <table class="table table-hover" id="team_<%=team%>_players_table">
   <tr>
@@ -7,25 +7,33 @@
     <th style="text-align: center">G.</th>
     <th style="text-align: center">A.</th>
     <th style="text-align: center">D.</th>
-    <th style="text-align: center">MVP</th>
+    <th style="text-align: center">⭐</th>
     <th></th>
   </tr>
-  <% team_players.each do |player| %>
+  <% team_players.each do |game_player| %>
     <tr>
-      <td align="left" class="player-name">
-        <img src="<%= player.picture %>" class="img img-fluid" style="width: 20px">
-        <%= link_to (player.nickname || player.name), group_player_path(player.group, player) %>
+      <td align="left" valign="middle" class="player-name">
+        <img src="<%= game_player.player.picture %>" class="img img-fluid" style="width: 20px">
+        <%= link_to (game_player.player.nickname || game_player.player.name), group_player_path(game.group, game_player.player) %>
       </td>
-      <td align="center">-</td>
-      <td align="center">-</td>
-      <td align="center">-</td>
-      <td align="center">-</td>
+      <td align="center" valign="middle" width="50">
+        <input type="text" class="form-control" value="0" style="text-align:center;">
+      </td>
+      <td align="center" valign="middle" width="50">
+        <input type="text" class="form-control" value="0" style="text-align:center;">
+      </td>
+      <td align="center" valign="middle" width="50">
+        <input type="text" class="form-control" value="0" style="text-align:center;">
+      </td>
+      <td align="center" valign="middle" width="50">
+        <input type="checkbox" class="orm-check-input">
+      </td>
       <td>
-        <%= button_tag (bootstrap_icon 'x-lg', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: red', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': player.id, controller: 'game', action: 'click->game#removePlayer'} %>
+        <%= button_tag (bootstrap_icon 'x-lg', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: red', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'no_team', controller: 'game', action: 'click->game#setPlayerTeam'} %>
         <% if team == :a %>
-          <%= button_tag (bootstrap_icon 'arrow-left-right', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: green', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+          <%= button_tag (bootstrap_icon 'arrow-left-right', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: green', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam'} %>
         <% else %>
-          <%= button_tag (bootstrap_icon 'arrow-left-right', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: blue', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+          <%= button_tag (bootstrap_icon 'arrow-left-right', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: blue', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam'} %>
         <% end %>
       </td>
     </tr>

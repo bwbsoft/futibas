@@ -14,3 +14,12 @@ a.nav-group-item{
     border-bottom: 1px solid var(--bs-primary);
   }
 }
+
+.game-banner1{
+  background-image: image-url('soccer/stadium-picture.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 175px;
+  background-color: rgba(96,	70,	126, 0.50); // Cor branca com 50% de opacidade
+  background-blend-mode: overlay;
+}

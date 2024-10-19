@@ -1,23 +1,55 @@
- <ul>
-  <% players.joins(:game_data).where(game_data: { team: :no_team }).each do |player| %>
-    <li>
-      <%= link_to (player.nickname || player.name), group_player_path(player.group, player) %>
-      <%= button_tag 'Remover', class: 'btn btn-danger', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, controller: 'game', action: 'click->game#removePlayer'} %>
-      <%= button_tag 'A', class: 'btn btn-success', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam'} %>
-      <%= button_tag 'B', class: 'btn btn-info', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam'} %>
-    </li>
-  <% end %>
+<%
+  no_team_players = @game.game_players.where(team: :no_team)
+%>
 
-  <%= button_tag 'Copy', class: 'btn btn-success', data: {controller: 'game', action: 'click->game#copyTeamsToClipboard'} %>
-  
-  <div class="row">
-    <div class="col-md-6">
-      <h3>Time A</h3>
-      <%= render 'groups/games/players_list_team_table', team: :a, game: @game %>
-    </div>
-    <div class="col-md-6">
-      <h3>Time B</h3>
-      <%= render 'groups/games/players_list_team_table', team: :b, game: @game %>
-    </div>
+<div class="row">
+  <div class="col-md-6">
+    <h3>Time A</h3>
+    <%= render 'groups/games/players_list_team_table', team: :a, game: @game %>
   </div>
-</ul>
+  <div class="col-md-6">
+    <h3>Time B</h3>
+    <%= render 'groups/games/players_list_team_table', team: :b, game: @game %>
+  </div>
+</div>
+
+<% if no_team_players.present? %>
+<div>
+  <h3>Jogadores sem time</h3>
+  <table class="table table-hover">
+    <tr>
+      <th>Nome</th>
+      <th style="text-align: center">Partidas</th>
+      <th style="text-align: center">Vitórias</th>
+      <th style="text-align: center">Empates</th>
+      <th style="text-align: center">Derrotas</th>
+      <th style="text-align: center">Gols</th>
+      <th style="text-align: center">Assistências</th>
+      <th style="text-align: center">Defesas</th>
+      <th style="text-align: center">Pontos</th>
+      <th></th>
+    </tr>
+    <% no_team_players.each do |game_data| %>
+      <tr>
+        <td align="left">
+          <img src="<%= game_data.player.picture %>" class="img img-fluid" style="width: 20px">
+          <%= game_data.player.name %> <%= game_data.player.nickname.present? ? "(#{game_data.player.nickname})" : ''%>
+        </td>
+        <td align="center"><%= game_data.player.matches_played %></td>
+        <td align="center"><%= game_data.player.matches_won %></td>
+        <td align="center"><%= game_data.player.matches_drawn %></td>
+        <td align="center"><%= game_data.player.matches_lost %></td>
+        <td align="center"><%= game_data.player.goals %></td>
+        <td align="center"><%= game_data.player.assists %></td>
+        <td align="center"><%= game_data.player.saves %></td>
+        <td align="center"><%= game_data.player.points %></td>
+        <td>
+          <%= button_tag bootstrap_icon('trash'), class: 'btn btn-danger', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': game_data.player.id, controller: 'game', action: 'click->game#removePlayer'} %>
+          <%= button_tag 'A', class: 'btn btn-success', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': game_data.player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+          <%= button_tag 'B', class: 'btn btn-info', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': game_data.player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<% end %>
