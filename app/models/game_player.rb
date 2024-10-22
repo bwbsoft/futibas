@@ -12,7 +12,7 @@
 #  points       :integer          default(0)
 #  red_cards    :integer          default(0)
 #  saves        :integer          default(0)
-#  team         :integer          default("none"), not null
+#  team         :integer          default("no_team"), not null
 #  yellow_cards :integer          default(0)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

@@ -5,11 +5,11 @@
 #  id                 :bigint           not null, primary key
 #  date               :datetime
 #  notes              :string
-#  status             :integer          default("scheduled")
+#  status             :integer          default(:awaiting)
 #  team_a_score       :integer          default(0)
 #  team_b_score       :integer          default(0)
 #  title              :string           not null
-#  winner_team        :integer          default("none"), not null
+#  winner_team        :integer          default("no_team"), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  greatest_impact_id :bigint

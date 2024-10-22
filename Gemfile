@@ -79,3 +79,6 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
+
+gem "solid_queue", "~> 1.0"
+gem 'mission_control-jobs'

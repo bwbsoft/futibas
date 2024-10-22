@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount MissionControl::Jobs::Engine => "/mission_control"
+  
   devise_for :users, path: 'auth', controllers: {
     sessions: 'auth/sessions',
     registrations: 'auth/registrations',
