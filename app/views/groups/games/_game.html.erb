@@ -9,7 +9,7 @@
       <%= render 'groups/games/players_selector', group: @group, game: @game %>
     </turbo-frame>
   </div>
-
+  
   <turbo-frame id="game_players_<%= @game.id %>" data-turbo-action="advance">
     <%= render 'groups/games/players_list', players: @game.players %>
   </turbo-frame>

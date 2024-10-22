@@ -75,6 +75,30 @@ export default class extends Controller {
     }
   }
 
+  sortTeams() {
+    try{
+      const gameId = this.element.dataset.gameId
+      if(gameId == "") return alert('Please enter a player id')
+      const groupId = this.element.dataset.groupId
+      const team = this.element.dataset.team
+      fetch(`/groups/${groupId}/games/${gameId}/sort_teams`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        }
+      }).then(response => response)
+      .then(data => {
+        // Após a criação do item, faça uma requisição Turbo para atualizar a listagem
+        Turbo.visit(window.location.href, { action: "replace" });
+      })
+      .catch(error => console.error('Erro:', error));
+
+    }catch(e){
+      console.log(e)
+    }
+  }
+
   copyTeamsToClipboard() {
     let str = ''
     const place = document.getElementById('game-place').innerText

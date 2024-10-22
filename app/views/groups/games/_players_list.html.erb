@@ -15,7 +15,10 @@
 
 <% if no_team_players.present? %>
 <div>
-  <h3>Jogadores sem time</h3>
+  <h3>
+    Jogadores sem time
+    <%= button_tag  bootstrap_icon('dice-6'), class: 'btn btn-primary', data: {'game-id': @game.id, 'group-id': @game.group.id, controller: 'game', action: 'click->game#sortTeams'} %>
+  </h3>
   <table class="table table-hover">
     <tr>
       <th>Nome</th>
