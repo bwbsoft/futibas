@@ -44,5 +44,9 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :cpf, presence: true, uniqueness: true
 
-  has_many :groups, dependent: :restrict_with_error
+  has_many :owned_groups, class_name: 'Group', foreign_key: 'owner_id',  dependent: :restrict_with_error
+
+  def groups
+    owned_groups
+  end
 end

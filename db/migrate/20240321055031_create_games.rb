@@ -1,9 +1,9 @@
 class CreateGames < ActiveRecord::Migration[7.1]
   def change
-    create_table :games do |t|
+    create_table :games, id: :uuid do |t|
       t.references :group, null: false, foreign_key: true, type: :uuid
-      t.references :place, null: false, foreign_key: true
-      t.references :user, null: false, foreign_key: true, type: :uuid
+      t.references :place, null: false, foreign_key: true, type: :uuid
+      t.references :owner, null: false, foreign_key: { to_table: :users }, type: :uuid
 
       t.integer :status, default: 0
       
@@ -14,9 +14,6 @@ class CreateGames < ActiveRecord::Migration[7.1]
       t.integer :winner_team, null: false, default: 0
       t.integer :team_a_score, default: 0
       t.integer :team_b_score, default: 0
-
-      t.references :mvp, null: true, foreign_key: { to_table: :players }
-      t.references :greatest_impact, null: true, foreign_key: { to_table: :players }
 
       t.timestamps
     end

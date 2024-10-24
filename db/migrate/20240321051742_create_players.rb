@@ -1,6 +1,6 @@
 class CreatePlayers < ActiveRecord::Migration[7.1]
   def change
-    create_table :players do |t|
+    create_table :players, id: :uuid do |t|
       t.references :group, null: false, foreign_key: true, type: :uuid
       t.references :user, null: true, foreign_key: true, type: :uuid
       
@@ -15,9 +15,10 @@ class CreatePlayers < ActiveRecord::Migration[7.1]
       t.string :instagram, index: true
 
       t.integer :points, default: 0
+      t.decimal :average, precision: 5, scale: 2, default: 0.0
       t.integer :consecutive_victories, default: 0
-      t.integer :mvp_times, default: 0
-      t.integer :biggest_impact_times, default: 0
+      t.integer :highlights, default: 0
+
       t.integer :goals, default: 0
       t.integer :assists, default: 0
       t.integer :saves, default: 0

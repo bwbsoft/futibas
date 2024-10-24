@@ -1,6 +1,7 @@
 class CreatePlaces < ActiveRecord::Migration[7.1]
   def change
-    create_table :places do |t|
+    create_table :places, id: :uuid do |t|
+      t.references :group, null: false, foreign_key: true, type: :uuid
       t.string :name, index: true
       t.string :uf, index: true
       t.string :city, index: true
@@ -13,6 +14,6 @@ class CreatePlaces < ActiveRecord::Migration[7.1]
       t.timestamps
     end
 
-    add_index :places, [:name, :city], unique: true
+    add_index :places, [:group_id, :name], unique: true
   end
 end

@@ -2,20 +2,20 @@
 #
 # Table name: players
 #
-#  id                    :bigint           not null, primary key
+#  id                    :uuid             not null, primary key
 #  absences              :integer          default(0)
 #  assists               :integer          default(0)
-#  biggest_impact_times  :integer          default(0)
+#  average               :decimal(5, 2)    default(0.0)
 #  consecutive_victories :integer          default(0)
 #  cpf                   :string
 #  email                 :string
 #  goals                 :integer          default(0)
+#  highlights            :integer          default(0)
 #  instagram             :string
 #  matches_drawn         :integer          default(0)
 #  matches_lost          :integer          default(0)
 #  matches_played        :integer          default(0)
 #  matches_won           :integer          default(0)
-#  mvp_times             :integer          default(0)
 #  name                  :string           not null
 #  nickname              :string
 #  notes                 :string

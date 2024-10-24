@@ -15,10 +15,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_22_014541) do
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "games", force: :cascade do |t|
+  create_table "games", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "group_id", null: false
-    t.bigint "place_id", null: false
-    t.uuid "user_id", null: false
+    t.uuid "place_id", null: false
+    t.uuid "owner_id", null: false
     t.integer "status", default: 0
     t.string "title", null: false
     t.datetime "date", precision: nil
@@ -26,30 +26,24 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_22_014541) do
     t.integer "winner_team", default: 0, null: false
     t.integer "team_a_score", default: 0
     t.integer "team_b_score", default: 0
-    t.bigint "mvp_id"
-    t.bigint "greatest_impact_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["greatest_impact_id"], name: "index_games_on_greatest_impact_id"
     t.index ["group_id"], name: "index_games_on_group_id"
-    t.index ["mvp_id"], name: "index_games_on_mvp_id"
+    t.index ["owner_id"], name: "index_games_on_owner_id"
     t.index ["place_id"], name: "index_games_on_place_id"
     t.index ["title"], name: "index_games_on_title"
-    t.index ["user_id"], name: "index_games_on_user_id"
   end
 
   create_table "games_players", force: :cascade do |t|
-    t.bigint "game_id", null: false
-    t.bigint "player_id", null: false
+    t.uuid "game_id", null: false
+    t.uuid "player_id", null: false
     t.integer "team", default: 0, null: false
+    t.boolean "is_goalkeeper", default: false
+    t.boolean "absent", default: false
+    t.boolean "highlight", default: false
     t.integer "goals", default: 0
     t.integer "assists", default: 0
     t.integer "saves", default: 0
-    t.integer "yellow_cards", default: 0
-    t.integer "red_cards", default: 0
-    t.boolean "absent", default: false
-    t.boolean "mvp", default: false
-    t.decimal "impact", precision: 3, scale: 2
     t.string "notes"
     t.integer "points", default: 0
     t.datetime "created_at", null: false
@@ -63,13 +57,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_22_014541) do
     t.string "notes"
     t.string "picture"
     t.string "discord_webhook_url"
-    t.uuid "user_id", null: false
+    t.uuid "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_groups_on_user_id"
+    t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
-  create_table "places", force: :cascade do |t|
+  create_table "places", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "group_id", null: false
     t.string "name"
     t.string "uf"
     t.string "city"
@@ -83,15 +78,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_22_014541) do
     t.index ["address"], name: "index_places_on_address"
     t.index ["city"], name: "index_places_on_city"
     t.index ["district"], name: "index_places_on_district"
+    t.index ["group_id", "name"], name: "index_places_on_group_id_and_name", unique: true
+    t.index ["group_id"], name: "index_places_on_group_id"
     t.index ["instagram"], name: "index_places_on_instagram"
-    t.index ["name", "city"], name: "index_places_on_name_and_city", unique: true
     t.index ["name"], name: "index_places_on_name"
     t.index ["phone"], name: "index_places_on_phone"
     t.index ["uf"], name: "index_places_on_uf"
     t.index ["website"], name: "index_places_on_website"
   end
 
-  create_table "players", force: :cascade do |t|
+  create_table "players", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "group_id", null: false
     t.uuid "user_id"
     t.string "name", null: false
@@ -103,9 +99,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_22_014541) do
     t.string "email"
     t.string "instagram"
     t.integer "points", default: 0
+    t.decimal "average", precision: 5, scale: 2, default: "0.0"
     t.integer "consecutive_victories", default: 0
-    t.integer "mvp_times", default: 0
-    t.integer "biggest_impact_times", default: 0
+    t.integer "highlights", default: 0
     t.integer "goals", default: 0
     t.integer "assists", default: 0
     t.integer "saves", default: 0
@@ -277,12 +273,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_22_014541) do
 
   add_foreign_key "games", "groups"
   add_foreign_key "games", "places"
-  add_foreign_key "games", "players", column: "greatest_impact_id"
-  add_foreign_key "games", "players", column: "mvp_id"
-  add_foreign_key "games", "users"
+  add_foreign_key "games", "users", column: "owner_id"
   add_foreign_key "games_players", "games"
   add_foreign_key "games_players", "players"
-  add_foreign_key "groups", "users"
+  add_foreign_key "groups", "users", column: "owner_id"
+  add_foreign_key "places", "groups"
   add_foreign_key "players", "groups"
   add_foreign_key "players", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
