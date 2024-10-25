@@ -1,5 +1,5 @@
 class Groups::PlayersController < GroupsControllerBase
-  before_action :set_player, only: %i[ show ]
+  before_action :set_player, only: %i[ show edit ]
   before_action :set_group, only: %i[ index new create edit update destroy ]
 
   def index
@@ -21,6 +21,7 @@ class Groups::PlayersController < GroupsControllerBase
 
   # GET /groups/1/edit
   def edit
+    render 'groups/players/new'
   end
 
   # POST /groups or /groups.json
@@ -45,7 +46,7 @@ class Groups::PlayersController < GroupsControllerBase
   def update
     respond_to do |format|
       if @player.update(player_params)
-        format.html { redirect_to group_url(@player), notice: "player was successfully updated." }
+        format.html { redirect_to group_players_url(@group, @player), notice: "player was successfully updated." }
         format.json { render :show, status: :ok, location: @player }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -59,7 +60,7 @@ class Groups::PlayersController < GroupsControllerBase
     @player.destroy!
 
     respond_to do |format|
-      format.html { redirect_to @player_group, notice: "Group was successfully destroyed." }
+      format.html { redirect_to @group, notice: "Player was successfully destroyed." }
       format.json { head :no_content }
     end
   end
