@@ -21,6 +21,10 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  queue:
+    <<: *primary_production
+    database: app_production_queue
+    migrations_paths: db/queue_migrate
 
 development:
   <<: *default
