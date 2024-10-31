@@ -38,7 +38,7 @@ class GamePlayer < ApplicationRecord
   enum result: [:pending, :win, :draw, :loss, :absent], _default: :pending
 
   def apply_stats
-    if team == :no_team
+    if no_team?
       player.absences = (player.absences + 1)
       update(absent: true)
       player.save
