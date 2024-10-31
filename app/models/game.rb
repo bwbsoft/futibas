@@ -41,6 +41,6 @@ class Game < ApplicationRecord
   enum winner_team: [:no_team, :a, :b], _default: :no_team
 
   def can_proccess?
-    awaiting? && date < Time.zone.current
+    awaiting? && date < Time.zone.now
   end
 end
