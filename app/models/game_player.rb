@@ -35,7 +35,7 @@ class GamePlayer < ApplicationRecord
   belongs_to :player
 
   enum team: [:no_team, :a, :b], _default: :no_team
-  enum result: [:pending, :win, :draw, :loss], _default: :pending
+  enum result: [:pending, :win, :draw, :loss, :absent], _default: :pending
 
   def apply_stats
     if team == :no_team
