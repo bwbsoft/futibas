@@ -1,13 +1,32 @@
 <div id="<%= dom_id @game %>">
 
   <div class="w-100 rounded bg-dark text-white p-3 game-banner1" style="position: relative">
-    <%= button_tag  bootstrap_icon('files'), class: 'btn btn-primary', style: "position: absolute; right: 10px; top: 10px", data: {controller: 'game', action: 'click->game#copyTeamsToClipboard'} %>
+    <div style="position: absolute; right: 10px; top: 10px">
+      <% if @game.can_proccess? %>
+      <%= button_tag  bootstrap_icon('fire'), class: 'btn btn-warning text-dark', data: {
+        controller: 'game', action: 'click->game#proccess', 'game-id': @game.id, 'group-id': @game.group.id,
+        'bs-toggle': "tooltip", 'bs-title': "Processar e finalizar partida"
+      } %>
+      <% end %>
+      <%= button_tag  bootstrap_icon('files'), class: 'btn btn-primary',  data: {
+        controller: 'game', action: 'click->game#copyTeamsToClipboard',
+        'bs-toggle': "tooltip", 'bs-title': "Copiar dados para o clipboard"
+        } %>
+    </div>
     <h1 id="game-time" class="text-white" class="d-flex align-items-center" style="font-weight: 700"><%= datetime_formatter(@game.date) %></h1>
     <h5 id="game-place" class="text-white" class="d-flex align-items-center", style="font-weight: 700">🏟️ <%= @game.place.name %></h5>
     <h6 id="game-place-address" class="text-white" class="d-flex align-items-center">📍 <%= @game.place.address %></h6>
-    <turbo-frame id="game_players_selector_<%= @game.id %>">
-      <%= render 'groups/games/players_selector', group: @group, game: @game %>
-    </turbo-frame>
+    <% if  @game.awaiting? %>
+      <turbo-frame id="game_players_selector_<%= @game.id %>">
+        <%= render 'groups/games/players_selector', group: @group, game: @game %>
+      </turbo-frame>
+    <% elsif @game.winner_team == 'a' %>
+      <h1 id="game-time" class="text-white" class="d-flex align-items-center" style="font-weight: 700">Vencido por time A</h1>
+    <% elsif @game.winner_team == 'b' %>
+      <h1 id="game-time" class="text-white" class="d-flex align-items-center" style="font-weight: 700">Vencido por time B</h1>
+    <% else %>
+      <h1 id="game-time" class="text-white" class="d-flex align-items-center" style="font-weight: 700">Empate</h1>
+    <% end %>
   </div>
   
   <turbo-frame id="game_players_<%= @game.id %>" data-turbo-action="advance">

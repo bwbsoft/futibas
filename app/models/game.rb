@@ -37,6 +37,10 @@ class Game < ApplicationRecord
   has_many :game_players, dependent: :restrict_with_error
   has_many :players, through: :game_players
 
-  enum status: [:enqueued, :playing, :processing, :finished], _default: :awaiting
+  enum status: [:awaiting, :processing, :finished], _default: :awaiting
   enum winner_team: [:no_team, :a, :b], _default: :no_team
+
+  def can_proccess?
+    awaiting? && date < Time.zone.current
+  end
 end

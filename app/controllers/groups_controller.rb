@@ -1,10 +1,5 @@
 class GroupsController < GroupsControllerBase
-  before_action :set_group, only: %i[ show edit update destroy ]
-
-  # GET /groups or /groups.json
-  def index
-    @groups = Group.all
-  end
+  before_action :set_group, only: %i[ show edit update destroy settings ranking ]
 
   # GET /groups/1 or /groups/1.json
   def show
@@ -18,6 +13,14 @@ class GroupsController < GroupsControllerBase
 
   # GET /groups/1/edit
   def edit
+  end
+
+  def settings
+    render :settings
+  end
+
+  def ranking
+    render :ranking
   end
 
   # POST /groups or /groups.json

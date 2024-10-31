@@ -6,7 +6,8 @@
       <%= link_to "Jogadores", group_players_path, class: "nav-group-item #{current_page?(group_players_path)? 'active':''}" %>
       <%= link_to "Partidas", group_games_path, class: "nav-group-item #{current_page?(group_games_path)? 'active':''}" %>
       <%= link_to "Locais", '#', class: "nav-group-item #{current_page?(group_games_path)? 'active':''}" %>
-      <%= link_to "Configurações", '#', class: "nav-group-item #{current_page?(group_games_path)? 'active':''}" %>
+      <%= link_to "Ranking", ranking_group_path(@group), class: "nav-group-item #{current_page?(ranking_group_path)? 'active':''}" %>
+      <%= link_to "Configurações", settings_group_path(@group), class: "nav-group-item #{current_page?(settings_group_path)? 'active':''}" %>
     </nav>
   </div>
 </div>

@@ -4,10 +4,11 @@
 <table class="table table-hover" id="team_<%=team%>_players_table">
   <tr>
     <th>Nome</th>
-    <th style="text-align: center">G.</th>
-    <th style="text-align: center">A.</th>
-    <th style="text-align: center">D.</th>
-    <th style="text-align: center">⭐</th>
+    <th style="text-align: center"><span role="button" data-bs-toggle="tooltip" data-bs-title="Goleiro?">🧤</span></th>
+    <th style="text-align: center"><span role="button" data-bs-toggle="tooltip" data-bs-title="Gols">G.</span></th>
+    <th style="text-align: center"><span role="button" data-bs-toggle="tooltip" data-bs-title="Assistências">A.</span></th>
+    <th style="text-align: center"><span role="button" data-bs-toggle="tooltip" data-bs-title="Defesas">D.</span></th>
+    <th style="text-align: center"><span role="button" data-bs-toggle="tooltip" data-bs-title="Jogador em Destaque">⭐</span></th>
     <th></th>
   </tr>
   <% team_players.each do |game_player| %>
@@ -17,23 +18,79 @@
         <%= link_to (game_player.player.nickname || game_player.player.name), group_player_path(game.group, game_player.player) %>
       </td>
       <td align="center" valign="middle" width="50">
-        <input type="text" class="form-control" value="0" style="text-align:center;">
+        <input 
+          type="checkbox" class="form-check-input"
+          <%= game_player.is_goalkeeper ? 'checked' : '' %>
+          data-group-id="<%= game.group.id %>"
+          data-game-id="<%= game.id %>" 
+          data-player-id="<%= game_player.player.id %>"  
+          data-attribute='is_goalkeeper'
+          data-controller='game'
+          data-action='change->game#setGamePlayerData'
+          <%= @game.can_proccess? ? '' : 'disabled' %>
+        >
       </td>
       <td align="center" valign="middle" width="50">
-        <input type="text" class="form-control" value="0" style="text-align:center;">
+        <input 
+          type="text" class="form-control" style="text-align:center;" 
+          value="<%= game_player.goals %>"
+          data-group-id="<%= game.group.id %>"
+          data-game-id="<%= game.id %>" 
+          data-player-id="<%= game_player.player.id %>"  
+          data-attribute='goals'
+          data-controller='game'
+          data-action='change->game#setGamePlayerData'
+          <%= @game.can_proccess? ? '' : 'disabled' %>
+        >
       </td>
       <td align="center" valign="middle" width="50">
-        <input type="text" class="form-control" value="0" style="text-align:center;">
+        <input 
+          type="text" class="form-control" style="text-align:center;"
+          value="<%= game_player.assists %>"
+          data-group-id="<%= game.group.id %>"
+          data-game-id="<%= game.id %>" 
+          data-player-id="<%= game_player.player.id %>"  
+          data-attribute='assists'
+          data-controller='game'
+          data-action='change->game#setGamePlayerData'
+           <%= @game.can_proccess? ? '' : 'disabled' %>
+        >
       </td>
       <td align="center" valign="middle" width="50">
-        <input type="checkbox" class="orm-check-input">
+        <input type="text" class="form-control" style="text-align:center;"
+          value="<%= game_player.saves %>"
+          data-group-id="<%= game.group.id %>"
+          data-game-id="<%= game.id %>" 
+          data-player-id="<%= game_player.player.id %>"  
+          data-attribute='saves'
+          data-controller='game'
+          data-action='change->game#setGamePlayerData'
+           <%= @game.can_proccess? ? '' : 'disabled' %>
+        >
+      </td>
+      <td align="center" valign="middle" width="50">
+        <input
+          <%= game_player.highlight ? 'checked' : '' %> 
+          type="checkbox" class="form-check-input"
+          data-group-id="<%= game.group.id %>"
+          data-game-id="<%= game.id %>" 
+          data-player-id="<%= game_player.player.id %>"  
+          data-attribute='highlight'
+          data-controller='game'
+          data-action='change->game#setGamePlayerData'
+           <%= @game.can_proccess? ? '' : 'disabled' %>
+        >
       </td>
       <td>
-        <%= button_tag (bootstrap_icon 'x-lg', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: red', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'no_team', controller: 'game', action: 'click->game#setPlayerTeam'} %>
-        <% if team == :a %>
-          <%= button_tag (bootstrap_icon 'arrow-left-right', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: green', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam'} %>
-        <% else %>
-          <%= button_tag (bootstrap_icon 'arrow-left-right', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: blue', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+        <% if @game.can_proccess? %>
+            <%= button_tag (bootstrap_icon 'x-lg', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: red', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'no_team', controller: 'game', action: 'click->game#setPlayerTeam', 'bs-toggle': "tooltip", 'bs-title': "Remover do time"} %>
+            <% if team == :a %>
+              <%= button_tag (bootstrap_icon 'arrow-left-right', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: green', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam',
+              'bs-toggle': "tooltip", 'bs-title': "Enviar para time B"
+              } %>
+            <% else %>
+              <%= button_tag (bootstrap_icon 'arrow-left-right', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: blue', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam', 'bs-toggle': "tooltip", 'bs-title': "Enviar para time A"} %>
+            <% end %>
         <% end %>
       </td>
     </tr>

@@ -4,11 +4,47 @@
 
 <div class="row">
   <div class="col-md-6">
-    <h3>Time A</h3>
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-6">
+        <h3>Time A</h3>
+      </div>
+      <div class="col-md-3 d-flex align-items-center justify-content-end">
+        <input 
+          type="text" class="form-control" style="text-align:center" 
+          value="<%= @game.team_a_score %>"
+          data-group-id="<%= @game.group.id %>"
+          data-game-id="<%= @game.id %>"
+          data-team='a'
+          data-controller='game'
+          data-action='change->game#setTeamScore'
+          <%= @game.can_proccess? ? '' : 'disabled' %>
+        >
+      </div>
+    </div>
     <%= render 'groups/games/players_list_team_table', team: :a, game: @game %>
   </div>
   <div class="col-md-6">
-    <h3>Time B</h3>
+    <div class="row">
+      <div class="col-md-3 d-flex align-items-center justify-content-start">
+        <input 
+          type="text" class="form-control" style="text-align:center" 
+          value="<%= @game.team_b_score %>"
+          data-group-id="<%= @game.group.id %>"
+          data-game-id="<%= @game.id %>"
+          data-team='b'
+          data-controller='game'
+          data-action='change->game#setTeamScore'
+           <%= @game.can_proccess? ? '' : 'disabled' %>
+        >
+      </div>
+      <div class="col-md-6">
+        <h3>Time B</h3>
+      </div>
+      <div class="col-md-3">
+      </div>
+    </div>
     <%= render 'groups/games/players_list_team_table', team: :b, game: @game %>
   </div>
 </div>
@@ -17,7 +53,10 @@
 <div>
   <h3>
     Jogadores sem time
-    <%= button_tag  bootstrap_icon('dice-6'), class: 'btn btn-primary', data: {'game-id': @game.id, 'group-id': @game.group.id, controller: 'game', action: 'click->game#sortTeams'} %>
+    <%= button_tag  bootstrap_icon('dice-6'), class: 'btn btn-primary', data: {
+      'game-id': @game.id, 'group-id': @game.group.id, controller: 'game', action: 'click->game#sortTeams',
+      'bs-toggle': "tooltip", 'bs-title': "Sortear times"
+    } %>
   </h3>
   <table class="table table-hover">
     <tr>
@@ -47,9 +86,16 @@
         <td align="center"><%= game_data.player.saves %></td>
         <td align="center"><%= game_data.player.points %></td>
         <td>
-          <%= button_tag bootstrap_icon('trash'), class: 'btn btn-danger', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': game_data.player.id, controller: 'game', action: 'click->game#removePlayer'} %>
-          <%= button_tag 'A', class: 'btn btn-success', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': game_data.player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam'} %>
-          <%= button_tag 'B', class: 'btn btn-info', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': game_data.player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam'} %>
+          <%= button_tag bootstrap_icon('trash'), class: 'btn btn-danger', data: {
+            'group-id': @group.id, 'game-id': @game.id, 'player-id': game_data.player.id, controller: 'game', action: 'click->game#removePlayer',
+            'bs-toggle': "tooltip", 'bs-title': "Remover da partida"
+          } %>
+          <%= button_tag 'A', class: 'btn btn-success', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': game_data.player.id, team: 'a', controller: 'game', action: 'click->game#setPlayerTeam',
+          'bs-toggle': "tooltip", 'bs-title': "Enviar para time A"
+          } %>
+          <%= button_tag 'B', class: 'btn btn-info', data: {'group-id': @group.id, 'game-id': @game.id, 'player-id': game_data.player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam',
+          'bs-toggle': "tooltip", 'bs-title': "Enviar para time B"
+          } %>
         </td>
       </tr>
     <% end %>
