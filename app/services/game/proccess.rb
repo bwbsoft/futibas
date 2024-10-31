@@ -40,11 +40,12 @@ class Game::Proccess
       end
     else
       @game.game_players.each do |game_player|
-        return if game_player.team == 'no_team'
-        if game_player.team == @game.winner_team
+        if game_player.team == 'no_team'
+          game_player.update(result: :absent, points: 0)
+        elsif game_player.team == @game.winner_team
           game_player.update(result: :win, points: WIN_POINTS)
         else
-          game_player.update(result: :loss, points: LOSE_POINTS) unless game_player.is_goalkeeper
+          game_player.update(result: :loss, points: game_player.is_goalkeeper ? 0 : LOSE_POINTS)  
         end
       end
     end
