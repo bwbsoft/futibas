@@ -1,7 +1,7 @@
 <%
   ranked_players = @group.players.order(points: :desc, average: :desc, matches_played: :asc)
 %>
-<h1><%= @group.name %></h1>
+<h1>Ranking <%= @group.name %></h1>
 
 <table class="table table-hover">
   <tr>
@@ -10,12 +10,10 @@
     <th style="text-align: center">Pontos</th>
     <th style="text-align: center">Nota</th>
     <th style="text-align: center">Partidas</th>
+    <th style="text-align: center">⭐</th>
     <th style="text-align: center">Vitórias</th>
     <th style="text-align: center">Empates</th>
     <th style="text-align: center">Derrotas</th>
-    <th style="text-align: center">Gols</th>
-    <th style="text-align: center">Assistências</th>
-    <th style="text-align: center">Defesas</th>
   </tr>
   <% ranked_players.each do |player| %>
     <tr>
@@ -29,6 +27,7 @@
       <td align="center"><%= player.points %></td>
       <td align="center"><%= player.average %></td>
       <td align="center"><%= player.matches_played %></td>
+      <td align="center"><%= player.highlights %></td>
       <td align="center"><%= player.matches_won %></td>
       <td align="center"><%= player.matches_drawn %></td>
       <td align="center"><%= player.matches_lost %></td>
