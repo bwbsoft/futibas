@@ -82,7 +82,7 @@
         >
       </td>
       <td>
-        <% if @game.waiting? %>
+        <% if @game.awaiting? %>
             <%= button_tag (bootstrap_icon 'x-lg', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: red', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'no_team', controller: 'game', action: 'click->game#setPlayerTeam', 'bs-toggle': "tooltip", 'bs-title': "Remover do time"} %>
             <% if team == :a %>
               <%= button_tag (bootstrap_icon 'arrow-left-right', style: 'height: 18px;width: auto;top: -2px;position: relative;'), class: '', style: 'border:none; background: none; color: green', data: {'group-id': game.group.id, 'game-id': game.id, 'player-id': game_player.player.id, team: 'b', controller: 'game', action: 'click->game#setPlayerTeam',
