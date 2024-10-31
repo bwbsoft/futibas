@@ -40,6 +40,9 @@ class GamePlayer < ApplicationRecord
   def apply_stats
     if team == :no_team
       player.absences = (player.absences + 1)
+      update(absent: true)
+      player.save
+      return
     end
     player.saves = saves
     player.goals = goals
