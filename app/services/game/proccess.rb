@@ -40,7 +40,7 @@ class Game::Proccess
       end
     else
       @game.game_players.each do |game_player|
-        return if game_player.team == :no_team
+        return if game_player.team == 'no_team'
         if game_player.team == @game.winner_team
           game_player.update(result: :win, points: WIN_POINTS)
         else
