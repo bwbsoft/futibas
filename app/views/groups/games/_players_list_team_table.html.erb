@@ -15,7 +15,7 @@
     <tr>
       <td align="left" valign="middle" class="player-name">
         <img src="<%= game_player.player.picture %>" class="img img-fluid" style="width: 20px">
-        <%= link_to (game_player.player.try(:nickname) || game_player.player.name), group_player_path(game.group, game_player.player) %>
+        <%= link_to ( game_player.player.nickname.present? ? game_player.player.nickname : game_player.player.name), group_player_path(game.group, game_player.player) %>
       </td>
       <td align="center" valign="middle" width="50">
         <input 
@@ -27,7 +27,7 @@
           data-attribute='is_goalkeeper'
           data-controller='game'
           data-action='change->game#setGamePlayerData'
-          <%= @game.can_proccess? ? '' : 'disabled' %>
+          <%= @game.awaiting? ? '' : 'disabled' %>
         >
       </td>
       <td align="center" valign="middle" width="50">
