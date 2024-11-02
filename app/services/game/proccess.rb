@@ -34,7 +34,7 @@ class Game::Proccess
   end
 
   def set_players_points
-    if @game.winner_team == :no_team
+    if @game.winner_team == 'no_team'
       @game.game_players.each do |game_player|
         game_player.update(result: :draw, points: DRAW_POINTS)
       end
