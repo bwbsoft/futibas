@@ -26,7 +26,7 @@ class GroupsController < GroupsControllerBase
   # POST /groups or /groups.json
   def create
     @group = Group.new(group_params)
-    @group.user = current_user
+    @group.owner = current_user
 
     respond_to do |format|
       if @group.save

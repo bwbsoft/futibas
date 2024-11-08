@@ -3,7 +3,7 @@ class Groups::PlayersController < GroupsControllerBase
   before_action :set_group, only: %i[ index new create edit update destroy ]
 
   def index
-    @players = @group.players
+    @players = @group.players.order(:name).paginate(page: params[:page])
     render 'groups/players/index'
   end
 

@@ -82,3 +82,6 @@ gem "devise", "~> 4.9"
 
 gem "solid_queue", "~> 1.0"
 gem 'mission_control-jobs'
+
+# Pagination
+gem 'will_paginate', '~> 3.3'

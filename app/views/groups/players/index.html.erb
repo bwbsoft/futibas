@@ -1,3 +1,4 @@
+<%= page_entries_info @players %>
 <table class="table table-hover">
   <tr>
     <th>Nome</th>
@@ -11,7 +12,7 @@
     <th style="text-align: center">Pontos</th>
     <th></th>
   </tr>
-  <% @group.players.each do |player| %>
+  <% @players.each do |player| %>
     <tr>
       <td align="left">
         <img src="<%= player.picture %>" class="img img-fluid" style="width: 20px">
@@ -29,3 +30,5 @@
     </tr>
   <% end %>
 </table>
+
+<%= will_paginate @players %>
