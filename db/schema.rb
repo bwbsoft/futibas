@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_30_225513) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_08_043210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -20,7 +20,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_30_225513) do
     t.uuid "place_id", null: false
     t.uuid "owner_id", null: false
     t.integer "status", default: 0
-    t.string "title", null: false
     t.datetime "date", precision: nil
     t.string "notes"
     t.integer "winner_team", default: 0, null: false
@@ -31,7 +30,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_30_225513) do
     t.index ["group_id"], name: "index_games_on_group_id"
     t.index ["owner_id"], name: "index_games_on_owner_id"
     t.index ["place_id"], name: "index_games_on_place_id"
-    t.index ["title"], name: "index_games_on_title"
   end
 
   create_table "games_players", force: :cascade do |t|

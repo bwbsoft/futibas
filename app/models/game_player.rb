@@ -10,7 +10,7 @@
 #  is_goalkeeper :boolean          default(FALSE)
 #  notes         :string
 #  points        :integer          default(0)
-#  result        :integer          default(0)
+#  result        :integer          default("pending")
 #  saves         :integer          default(0)
 #  team          :integer          default("no_team"), not null
 #  created_at    :datetime         not null

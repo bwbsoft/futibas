@@ -27,7 +27,7 @@
     <% @group.games.each do |game| %>
       <tr>
         <td><%= game.date.strftime('%d/%m/%Y %H:%M') %></td>
-        <td><%= game.title %></td>
+        <td>---</td>
         <td><%= game.place.name %></td>
         <td><%= game.players.count %></td>
         <td>

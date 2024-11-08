@@ -5,10 +5,9 @@
 #  id           :uuid             not null, primary key
 #  date         :datetime
 #  notes        :string
-#  status       :integer          default(:awaiting)
+#  status       :integer          default("awaiting")
 #  team_a_score :integer          default(0)
 #  team_b_score :integer          default(0)
-#  title        :string           not null
 #  winner_team  :integer          default("no_team"), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -21,7 +20,6 @@
 #  index_games_on_group_id  (group_id)
 #  index_games_on_owner_id  (owner_id)
 #  index_games_on_place_id  (place_id)
-#  index_games_on_title     (title)
 #
 # Foreign Keys
 #
