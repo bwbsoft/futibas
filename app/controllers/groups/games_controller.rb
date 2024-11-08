@@ -1,16 +1,56 @@
 class Groups::GamesController < GroupsControllerBase
-  before_action :set_game, only: %i[ show add_player remove_player set_player_team sort_teams proccess set_team_score set_player_data ]
+  before_action :set_game, only: %i[ show edit update add_player remove_player set_player_team sort_teams proccess set_team_score set_player_data ]
   before_action :protect_finished_game, only: %i[ add_player remove_player set_player_team sort_teams set_team_score set_player_data ]
   before_action :set_group
 
   def index
-    @games = @group.games
+    @games = @group.games.order(date: :desc).paginate(page: params[:page])
     render 'groups/games/index' 
   end
   
   # GET /groups/:id/games/:id
   def show
     render 'groups/games/show'
+  end
+
+  def new
+    @game = Game.new
+    render 'groups/games/new'
+  end
+
+  def edit
+    render 'groups/games/edit'
+  end
+
+  def create
+    @game = Game.new(game_params)
+    @game.group = @group
+    @game.owner = current_user
+
+    respond_to do |format|
+      if @game.save
+        format.html { redirect_to group_games_url(@group, @game), notice: "game was successfully created." }
+        format.json { render :show, status: :created, location: @game }
+      else
+        puts "@@@@@"
+        puts @game.errors.full_messages
+        puts "@@@@@"
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @game.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @game.update(game_params)
+        format.html { redirect_to group_games_url(@group, @game), notice: "game was successfully updated." }
+        format.json { render :show, status: :ok, location: @game }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @game.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def sort_teams
@@ -99,6 +139,10 @@ class Groups::GamesController < GroupsControllerBase
 
   def player_data_params
     params.require(:player_data).permit(:goals, :assists, :saves, :highlight, :notes, :absent, :is_goalkeeper)
+  end
+
+  def game_params
+    params.require(:game).permit(:title, :date, :notes, :place_id)
   end
 
   def protect_finished_game

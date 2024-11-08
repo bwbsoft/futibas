@@ -1,18 +1,31 @@
+<%= page_entries_info @games %>
 <table class="table table-hover">
   <tr>
     <th>Data</th>
     <th style="text-align: center">Nome</th>
     <th style="text-align: center">Jogadores</th>
+    <th style="text-align: center">Status</th>
+    <th style="text-align: center">Time A</th>
+    <th style="text-align: center">Time B</th>
     <th style="text-align: center">Vencedor</th>
     <th></th>
   </tr>
-  <% @group.games.each do |game| %>
+  <% @games.each do |game| %>
     <tr>
-      <td align="center"><%= game.date %></td>
+      <td align="left">
+        <%= link_to group_game_path(@group, game) do %>
+          <%= datetime_formatter game.date %>
+        <% end %>
+      </td>
       <td align="center"><%= game.title %></td>
       <td align="center"><%= game.players.count %></td>
-      <td align="center"><%= 'a' %></td>
-      <td><%= link_to 'Show', group_game_path(@group, game) %></td>
+      <td align="center"><%= game.status %></td>
+      <td align="center"><%= game.team_a_score %></td>
+      <td align="center"><%= game.team_b_score %></td>
+      <td align="center"><%= game.winner_team %></td>
+      <td></td>
     </tr>
   <% end %>
 </table>
+
+<%= will_paginate @games %>

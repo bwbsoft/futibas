@@ -15,8 +15,10 @@
   <% @players.each do |player| %>
     <tr>
       <td align="left">
-        <img src="<%= player.picture %>" class="img img-fluid" style="width: 20px">
-        <%= player.name %> <%= player.nickname.present? ? "(#{player.nickname})" : ''%>
+        <%= link_to group_player_path(@group, player) do %>
+          <img src="<%= player.picture %>" class="img img-fluid" style="width: 20px">
+          <%= player.name %> <%= player.nickname.present? ? "(#{player.nickname})" : ''%>
+        <% end %>
       </td>
       <td align="center"><%= player.matches_played %></td>
       <td align="center"><%= player.matches_won %></td>
@@ -26,7 +28,7 @@
       <td align="center"><%= player.assists %></td>
       <td align="center"><%= player.saves %></td>
       <td align="center"><%= player.points %></td>
-      <td><%= link_to 'Show', group_player_path(@group, player) %></td>
+      <td></td>
     </tr>
   <% end %>
 </table>

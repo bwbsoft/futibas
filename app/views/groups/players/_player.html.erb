@@ -1,4 +1,48 @@
 <div id="<%= dom_id @player %>">
-  <%= @player.name %><br>
-  <img src="<%= @player.picture %>" />
+  <h2><%= @player.name %></h2>
+  <div class="row">
+    <div class="col-md-3">
+      <img src="<%= @player.picture %>" class="img img-fluid img-thumbnail"/>
+      <br>
+      <strong>Partidas:</strong> <%= @player.matches_played %><br>
+      <strong>Vitórias:</strong> <%= @player.matches_won %><br>
+      <strong>Empates:</strong> <%= @player.matches_drawn %><br>
+      <strong>Derrotas:</strong> <%= @player.matches_lost %><br>
+      <strong>Gols:</strong> <%= @player.goals %><br>
+      <strong>Assistências:</strong> <%= @player.assists %><br>
+      <strong>Defesas:</strong> <%= @player.saves %><br>
+      <strong>Pontos:</strong> <%= @player.points %><br>
+    </div>
+    <div class="col-md-9">
+      <h3>Partidas</h3>
+    <table class="table table-hover">
+      <tr>
+        <th>Data</th>
+        <th style="text-align: center">Nome</th>
+        <th style="text-align: center">Jogadores</th>
+        <th style="text-align: center">Status</th>
+        <th style="text-align: center">Time A</th>
+        <th style="text-align: center">Time B</th>
+        <th style="text-align: center">Vencedor</th>
+        <th></th>
+      </tr>
+      <% @player.game_data.joins(:game).where(game: { status: :finished }).each do |game_data| %>
+        <tr>
+          <td align="left">
+            <%= link_to group_game_path(@player.group, game_data.game) do %>
+              <%= datetime_formatter game_data.game.date %>
+            <% end %>
+          </td>
+          <td align="center"><%= game_data.game.title %></td>
+          <td align="center"><%= game_data.game.players.count %></td>
+          <td align="center"><%= game_data.game.status %></td>
+          <td align="center"><%= game_data.game.team_a_score %></td>
+          <td align="center"><%= game_data.game.team_b_score %></td>
+          <td align="center"><%= game_data.game.winner_team %></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </table>
+    </div>
+  </div>
 </div>

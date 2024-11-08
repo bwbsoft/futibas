@@ -1,5 +1,5 @@
 class Groups::PlayersController < GroupsControllerBase
-  before_action :set_player, only: %i[ show edit ]
+  before_action :set_player, only: %i[ show edit update ]
   before_action :set_group, only: %i[ index new create edit update destroy ]
 
   def index

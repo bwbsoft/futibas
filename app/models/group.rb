@@ -22,6 +22,7 @@
 class Group < ApplicationRecord
   has_many :players, dependent: :restrict_with_error
   has_many :games, dependent: :restrict_with_error
+  has_many :places, dependent: :restrict_with_error
   belongs_to :owner, class_name: 'User'
   
 end

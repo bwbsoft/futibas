@@ -1,0 +1,28 @@
+<%
+  places_list = @group.places
+  places_list_data = options_for_select(places_list.map { |place| [
+    place.name, place.id
+  ] })
+%>
+
+<%= form_with(model: game, url: (group_game_path(@group, game) rescue group_games_path(@group, game))) do |form| %>
+  <div>
+    <%= form.label :data, class: "form-label" %>
+    <%= form.datetime_local_field :date, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :notes, class: "form-label" %>
+    <%= form.text_field :notes, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :local, class: "form-label" %>
+    <%= form.select :place_id, places_list_data, {prompt: 'Selecione um local'}, { data: {controller: 'slim'} } %>
+  </div>
+
+
+  <div>
+    <%= form.submit 'Salvar', class: 'btn btn-primary' %>
+  </div>
+<% end %>
