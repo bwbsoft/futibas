@@ -1,13 +1,9 @@
-class GroupsController < ApplicationController
-  before_action :set_group, only: %i[ show edit update destroy ]
-
-  # GET /groups or /groups.json
-  def index
-    @groups = Group.all
-  end
+class GroupsController < GroupsControllerBase
+  before_action :set_group, only: %i[ show edit update destroy settings ranking ]
 
   # GET /groups/1 or /groups/1.json
   def show
+    @page_title = @group.name
   end
 
   # GET /groups/new
@@ -19,9 +15,18 @@ class GroupsController < ApplicationController
   def edit
   end
 
+  def settings
+    render :settings
+  end
+
+  def ranking
+    render :ranking
+  end
+
   # POST /groups or /groups.json
   def create
     @group = Group.new(group_params)
+    @group.owner = current_user
 
     respond_to do |format|
       if @group.save
@@ -58,11 +63,6 @@ class GroupsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_group
-      @group = Group.find(params[:id])
-    end
-
     # Only allow a list of trusted parameters through.
     def group_params
       params.require(:group).permit(:name, :notes)

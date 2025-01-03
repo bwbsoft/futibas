@@ -1,26 +1,39 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="card rounded-3 shadow-sm w-100">
+  <div class="card-header py-3">
+    <h4 class="my-0 fw-normal">Login</h4>
   </div>
+  <div class="card-body">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field form-group">
+        
+        <%= f.label :email, class: 'form-label' %><br />
+        <div class="input-icon text-primary">
+          <%= bootstrap_icon 'envelope-fill', style: 'height: 18px;width: auto;top: -2px;position: relative;' %>
+        </div>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'nome@email.com', class: 'form-control' %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+      <div class="field form-group">
+        <%= f.label :password, value: 'Senha', class: 'form-label'%><br />
+        <div class="input-icon text-primary">
+          <%= bootstrap_icon 'lock-fill', style: 'height: 18px;width: auto;top: -2px;position: relative;' %>
+        </div>
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: 'Sua senha', class: 'form-control' %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field form-group d-flex flex-row align-items-center">
+          <%= f.check_box :remember_me, class: 'form-check-input m-0 p-0 mr-2' %>&nbsp;
+          <%= f.label :remember_me, class: 'form-check-label m-0 p-0', value: 'Manter-me logado?' %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= link_to "Esqueci minha senha", new_password_path(resource_name), { "data-turbo": 'false' } %><br />
+        <%= f.submit "Login", class: 'btn btn-primary btn-lg btn-block mt-2' %>
+      </div>
+    <% end %>
+
+    <% render "devise/shared/links" %>
   </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

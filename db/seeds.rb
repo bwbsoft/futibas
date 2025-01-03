@@ -11,10 +11,11 @@
 # Create a user
 admin = User.create(name: "Admin", email: "admin@dev.com", password: "teste1234", cpf: "066.207.627-35", role: :admin) # CPF is Fake
 user = User.create(name: "User", email: "user@dev.com", password: "teste1234", cpf: "678.694.022-65", role: :player) # CPF is Fake
-group = Group.create(name: "Soccer", user: user, notes: "Soccer group")
+group = Group.create(name: "Soccer", owner: user, notes: "Fut🧂 das Sextas")
 
 places = [
   Place.create(
+    group: group,
     name: 'Arena do Grêmio',
     uf: 'RS',
     city: 'Porto Alegre',
@@ -25,6 +26,7 @@ places = [
     instagram: 'arenapoa',
   ),
   Place.create(
+    group: group,
     name: 'Soccer City',
     uf: 'RS',
     city: 'Porto Alegre',
@@ -35,6 +37,7 @@ places = [
     instagram: 'soccercitypoa',
   ),
   Place.create(
+    group: group,
     name: 'A Bombonera',
     uf: 'RS',
     city: 'Porto Alegre',
@@ -48,17 +51,16 @@ places = [
 
 game = Game.create!(
   group: group,
-  user: user,
   place: places.sample,
   date: 2.days.from_now,
   title: 'Soccer Game ' + 2.days.from_now.strftime('%d/%m/%Y %H:%M'),
-  user: user,
+  owner: user,
 )
 
 20.times do |n|
   Player.create!(
     group: group,
-    name: Faker::Name.name + ' ' + n.to_s,
+    name: Faker::Name.name,
     email: Faker::Internet.email,
     phone: Faker::PhoneNumber.cell_phone,
     instagram: Faker::Internet.username,

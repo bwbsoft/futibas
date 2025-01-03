@@ -1,0 +1,1 @@
+get '/g/:id', to: 'public_data#show_group', as: 'public_group'

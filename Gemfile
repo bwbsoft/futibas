@@ -47,6 +47,13 @@ gem "bootsnap", require: false
 gem 'documentos_br', '~> 1.1'
 gem 'faker'
 
+# Stylesheets
+gem 'popper_js', '~> 2.11.8'
+gem 'sassc-rails', '~> 2.1'
+gem 'bootstrap', '~> 5.3.3'
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.8'
+gem 'bootstrap-icons-helper', '~> 2.0', '>= 2.0.1'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
@@ -72,3 +79,9 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
+
+gem "solid_queue", "~> 1.0"
+gem 'mission_control-jobs'
+
+# Pagination
+gem 'will_paginate', '~> 3.3'

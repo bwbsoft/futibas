@@ -1,0 +1,36 @@
+<%= page_entries_info @players %>
+<table class="table table-hover">
+  <tr>
+    <th>Nome</th>
+    <th style="text-align: center">Partidas</th>
+    <th style="text-align: center">Vitórias</th>
+    <th style="text-align: center">Empates</th>
+    <th style="text-align: center">Derrotas</th>
+    <th style="text-align: center">Gols</th>
+    <th style="text-align: center">Assistências</th>
+    <th style="text-align: center">Defesas</th>
+    <th style="text-align: center">Pontos</th>
+    <th></th>
+  </tr>
+  <% @players.each do |player| %>
+    <tr>
+      <td align="left">
+        <%= link_to group_player_path(@group, player) do %>
+          <img src="<%= player.picture %>" class="img img-fluid" style="width: 20px">
+          <%= player.name %> <%= player.nickname.present? ? "(#{player.nickname})" : ''%>
+        <% end %>
+      </td>
+      <td align="center"><%= player.matches_played %></td>
+      <td align="center"><%= player.matches_won %></td>
+      <td align="center"><%= player.matches_drawn %></td>
+      <td align="center"><%= player.matches_lost %></td>
+      <td align="center"><%= player.goals %></td>
+      <td align="center"><%= player.assists %></td>
+      <td align="center"><%= player.saves %></td>
+      <td align="center"><%= player.points %></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @players %>

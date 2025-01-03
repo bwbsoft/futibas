@@ -1,0 +1,43 @@
+<%= form_with(model: player, url: (group_player_path(@group, @player) rescue group_players_path(@group, @player))) do |form| %>
+  <div>
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :nickname, class: "form-label" %>
+    <%= form.text_field :nickname, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :cpf, class: "form-label" %>
+    <%= form.text_field :cpf, class: "form-control" %>
+  </div>
+
+
+  <div>
+    <%= form.label :email, class: "form-label" %>
+    <%= form.text_field :email, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :instagram, class: "form-label" %>
+    <%= form.text_field :instagram, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :phone, class: "form-label" %>
+    <%= form.text_field :phone, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :notes, class: "form-label" %>
+    <%= form.text_area :notes, class: "form-control" %>
+  </div>
+
+
+
+  <div>
+    <%= form.submit 'Salvar', class: 'btn btn-primary' %>
+  </div>
+<% end %>

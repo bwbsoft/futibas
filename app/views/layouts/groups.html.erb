@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Futibas</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="">
+      <%= render 'layouts/components/main_header' %>
+      <div class="line-primary"></div>
+      <%= render 'layouts/components/sub_header_dashboard' %>
+      <%= render 'layouts/components/nav_menu_groups' %>
+    </header>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <div class="container">
+      <%= yield %>
+    </main>
+  </body>
+</html>

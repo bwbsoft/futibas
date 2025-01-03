@@ -1,17 +1,19 @@
-<h1>Bem vindo! <%= current_user.name %></h1>
-<h4>Meus Grupos</h4>
-
-<table border="1">
-  <tr>
-    <td>Nome</td>
-    <td>#</td>
-  </tr>
+<table class="table">
   <% current_user.groups.each do |group| %>
     <tr>
-      <td><%= group.name %></td>
-      <td><%= link_to "Exibir", group %></td>
+      <td width="45px" align="center" valign="middle">
+        <%= link_to group do %>
+          <img src="<%= group.picture || 'https://images.vexels.com/content/132209/preview/soccer-player-circle-icon-f4ab82.png' %>" class="img img-fluid">
+        <% end %>
+      </td>
+      <td align="left" valign="middle" tyle="width: 100%"><%= link_to group.name, group %></td>
+      <td align="right" valign="middle" width="200">
+        <small><%= group.players.count %> <%= bootstrap_icon 'people', style: "height: 12px; margin-botom: 3px" %></small>
+        <span class="gray">•</span>
+        <small>25/09/2024 04:07</small>
+      </td>
     </tr>
   <% end %>
 </table>
+
 <br>
-<%= link_to "New group", new_group_path %>
