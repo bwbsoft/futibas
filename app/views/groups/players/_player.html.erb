@@ -26,7 +26,7 @@
         <th style="text-align: center">Vencedor</th>
         <th></th>
       </tr>
-      <% @player.game_data.joins(:game).where(game: { status: :finished }).each do |game_data| %>
+      <% @player.game_data.joins(:game).where(game: { status: :finished }).order(game: {date: :desc}).each do |game_data| %>
         <tr>
           <td><%= game_data.result %></td>
           <td align="left">
