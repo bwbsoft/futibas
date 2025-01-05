@@ -53,7 +53,6 @@ game = Game.create!(
   group: group,
   place: places.sample,
   date: 2.days.from_now,
-  title: 'Soccer Game ' + 2.days.from_now.strftime('%d/%m/%Y %H:%M'),
   owner: user,
 )
 
