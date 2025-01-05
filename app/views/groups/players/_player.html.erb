@@ -17,8 +17,8 @@
       <h3>Partidas</h3>
     <table class="table table-hover">
       <tr>
+        <th>-</th>
         <th>Data</th>
-        <th style="text-align: center">Nome</th>
         <th style="text-align: center">Jogadores</th>
         <th style="text-align: center">Status</th>
         <th style="text-align: center">Time A</th>
@@ -28,12 +28,12 @@
       </tr>
       <% @player.game_data.joins(:game).where(game: { status: :finished }).each do |game_data| %>
         <tr>
+          <td><%= game_data.result %></td>
           <td align="left">
             <%= link_to group_game_path(@player.group, game_data.game) do %>
               <%= datetime_formatter game_data.game.date %>
             <% end %>
           </td>
-          <td align="center">---</td>
           <td align="center"><%= game_data.game.players.count %></td>
           <td align="center"><%= game_data.game.status %></td>
           <td align="center"><%= game_data.game.team_a_score %></td>
