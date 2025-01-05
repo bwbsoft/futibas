@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_08_043210) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_03_124801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -121,6 +121,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_043210) do
     t.index ["name"], name: "index_players_on_name"
     t.index ["phone"], name: "index_players_on_phone"
     t.index ["user_id"], name: "index_players_on_user_id"
+  end
+
+  create_table "players_tags", id: false, force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.bigint "player_id", null: false
   end
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
@@ -244,6 +249,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_043210) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.uuid "group_id", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_tags_on_group_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "role", default: 0
     t.string "name", null: false
@@ -285,4 +299,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_08_043210) do
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
+  add_foreign_key "tags", "groups"
 end

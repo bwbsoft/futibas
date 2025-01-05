@@ -50,6 +50,7 @@ class Player < ApplicationRecord
   belongs_to :group
   has_many :game_data, class_name: 'GamePlayer', dependent: :restrict_with_error
   has_many :games, through: :game_data
+  has_and_belongs_to_many :tags
   
   validates :cpf, uniqueness: true, allow_nil: true
 end
