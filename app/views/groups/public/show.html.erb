@@ -1,5 +1,5 @@
 <%
-  ranked_players = @group.players.order(points: :desc, average: :desc, matches_played: :asc).limit(20)
+  ranked_players = @group.players.where('players.matches_played >= 3').order(points: :desc, average: :desc, matches_played: :asc).limit(20)
 %>
 <h1>Ranking <%= @group.name %></h1>
 
