@@ -1,5 +1,5 @@
 <%
-  ranked_players = @group.players.order(points: :desc, average: :desc, matches_played: :asc)
+  ranked_players = @group.players.order(points: :desc, average: :desc, matches_played: :asc).limit(20)
 %>
 <h1>Ranking <%= @group.name %></h1>
 
@@ -8,32 +8,66 @@
     <th>#</th>
     <th>Nome</th>
     <th style="text-align: center">Pontos</th>
-    <th style="text-align: center">Nota</th>
+    <th style="text-align: center">Rating</th>
     <th style="text-align: center">Partidas</th>
     <th style="text-align: center">⭐</th>
     <th style="text-align: center">Vitórias</th>
     <th style="text-align: center">Empates</th>
     <th style="text-align: center">Derrotas</th>
+    <th style="text-align: center">-</th>
   </tr>
   <% ranked_players.each do |player| %>
+    <% number = ranked_players.index(player) + 1 %>
     <tr>
-      <td align="left">
-        <%= ranked_players.index(player) + 1 %>º
+      <td align="center" class="<%= 
+        if number <= 3
+          'bg-warning'
+        elsif number > 3 && number <= 10
+          'bg-info'
+        else
+          'bg-secondary'
+        end
+      %>
+      ">
+        <%= 
+          if number <= 3
+            "<div class='text-white text-bolder'><strong>#{number}º</strong></div>"
+          elsif number > 3 && number <= 10
+            "<div class=''><strong>#{number}º</strong></div>"
+          else
+            "<div class='text-white'>#{number}º</div>"
+          end.html_safe
+        %>
       </td>
       <td align="left">
         <img src="<%= player.picture %>" class="img img-fluid" style="width: 20px">
-        <%= player.nickname.present? ? player.nickname : player.name%>
+        <strong><%= player.nickname.present? ? player.nickname : player.name%></strong>
+        <%= "<img src='https://media.tenor.com/K3j9pwWlME0AAAAj/fire-flame.gif' width='20' data-toggle='tooltip' data-placement='right' title='Rating ótimo' class='cursor-pointer'>".html_safe if player.rating >= 3 && player.games.count > 2 %>
+        <%= "<span ta-toggle='tooltip' data-placement='right' title='Rating péssimo' class='cursor-pointer'>☠️</span>".html_safe if player.rating < 1 %>
       </td>
       <td align="center"><%= player.points %></td>
-      <td align="center"><%= player.average %></td>
+      <td align="center"><%= player.rating %></td>
       <td align="center"><%= player.matches_played %></td>
       <td align="center"><%= player.highlights %></td>
       <td align="center"><%= player.matches_won %></td>
       <td align="center"><%= player.matches_drawn %></td>
       <td align="center"><%= player.matches_lost %></td>
-      <td align="center"><%= player.goals %></td>
-      <td align="center"><%= player.assists %></td>
-      <td align="center"><%= player.saves %></td>
+      <td align="center">
+        <% 
+          GamePlayer.finished.where(player: player).limit(3).limit(5).reverse.each do |game|
+            haha = if game.win? 
+              "<small data-toggle='tooltip' data-placement='right' title='#{game.game.date.strftime('%d/%m/%Y')}' class='cursor-pointer'>🟢</small>"
+            elsif game.draw?
+              "<small data-toggle='tooltip' data-placement='right' title='#{game.game.date.strftime('%d/%m/%Y')}' class='cursor-pointer'>⚪</small>"
+            elsif game.loss?
+              "<small data-toggle='tooltip' data-placement='right' title='#{game.game.date.strftime('%d/%m/%Y')}' class='cursor-pointer'>🔴</small>"
+            end
+        %>
+          <%= haha.html_safe %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
 </table>
+<div class="d-flex justify-content-center"><small><i>Se você não esta aqui, melhore... MUITO!</i></small></div>
+

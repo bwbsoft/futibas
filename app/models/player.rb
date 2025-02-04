@@ -53,4 +53,12 @@ class Player < ApplicationRecord
   has_and_belongs_to_many :tags
   
   validates :cpf, uniqueness: true, allow_nil: true
+
+  def rating
+    @rating ||= begin
+      rating_data = GamePlayer.finished.where(player: self).limit(3)
+      return 0 if rating_data.nil?
+      (rating_data.pluck(:points).sum / rating_data.size.to_f).round(2)
+    end
+  end
 end

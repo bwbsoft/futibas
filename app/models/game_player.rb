@@ -37,6 +37,8 @@ class GamePlayer < ApplicationRecord
   enum team: [:no_team, :a, :b], _default: :no_team
   enum result: [:pending, :win, :draw, :loss, :absent], _default: :pending
 
+  scope :finished, -> { joins(:game).where(games: { status: :finished }).where.not(result: :pending).order('games.date DESC') }
+
   def apply_stats
     if no_team?
       player.absences = (player.absences + 1)
