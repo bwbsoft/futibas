@@ -1,6 +1,22 @@
 #!/bin/bash -e
 
-# Since database is managed externally, we skip database preparation
-# and go straight to executing the command
+# If running the rails server then prepare the database
+if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+  echo "Preparing database..."
+  
+  # Check if we can connect to the database
+  if ! ./bin/rails runner "ActiveRecord::Base.connection.execute('SELECT 1')" 2>/dev/null; then
+    echo "Database not accessible, attempting to create..."
+    
+    # Try to create the database if it doesn't exist
+    ./bin/rails db:create 2>/dev/null || echo "Database creation failed or not needed, continuing..."
+  fi
+  
+  # Run migrations and prepare database
+  echo "Running database migrations..."
+  ./bin/rails db:prepare
+  
+  echo "Database preparation completed successfully."
+fi
 
 exec "${@}"
