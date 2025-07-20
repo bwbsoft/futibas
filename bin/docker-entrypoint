@@ -3,24 +3,27 @@
 # If running the rails server then prepare the database
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
   echo "Preparing database..."
-  
+
   # Check if we can connect to the database
   if ! ./bin/rails runner "ActiveRecord::Base.connection.execute('SELECT 1')" 2>/dev/null; then
     echo "Database not accessible, attempting to create..."
-    
-    # Try to create the database if it doesn't exist
     ./bin/rails db:create 2>/dev/null || echo "Database creation failed or not needed, continuing..."
   fi
-  
-  # Run migrations and prepare database
-  echo "Running database migrations..."
-  ./bin/rails db:prepare
-  
+
+  # Check if the schema_migrations table exists
+  if ./bin/rails runner "puts ActiveRecord::Base.connection.data_source_exists?('schema_migrations')" | grep -q "false"; then
+    echo "Banco parece estar vazio, executando db:setup (primeira inicialização)..."
+    ./bin/rails db:setup
+  else
+    echo "Banco já existe com schema, executando apenas db:migrate..."
+    ./bin/rails db:migrate
+  fi
+
   # Ensure Solid Queue tables are properly set up
   echo "Setting up Solid Queue..."
   ./bin/rails solid_queue:install 2>/dev/null || echo "Solid Queue migrations already exist"
   ./bin/rails db:migrate 2>/dev/null || echo "Migrations completed"
-  
+
   echo "Database preparation completed successfully."
 fi
 
