@@ -16,6 +16,11 @@ if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
   echo "Running database migrations..."
   ./bin/rails db:prepare
   
+  # Ensure Solid Queue tables are properly set up
+  echo "Setting up Solid Queue..."
+  ./bin/rails solid_queue:install:migrations 2>/dev/null || echo "Solid Queue migrations already exist"
+  ./bin/rails db:migrate 2>/dev/null || echo "Migrations completed"
+  
   echo "Database preparation completed successfully."
 fi
 

@@ -70,6 +70,10 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   config.active_job.queue_adapter = :solid_queue
   # config.solid_queue.connects_to = { database: { writing: :queue } }
+  
+  # Solid Queue configuration for production
+  config.solid_queue.silence_polling = true
+  config.solid_queue.supervisor_pidfile = "tmp/pids/solid_queue_supervisor.pid"
 
   # config.active_job.queue_name_prefix = "futapp_production"
 
