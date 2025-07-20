@@ -21,7 +21,7 @@ FROM base as build
 
 # Install packages needed to build gems and run the application
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config && \
+    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
@@ -45,7 +45,7 @@ FROM base
 
 # Install packages needed for deployment (only runtime dependencies)
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libvips && \
+    apt-get install --no-install-recommends -y curl libpq5 libvips && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
