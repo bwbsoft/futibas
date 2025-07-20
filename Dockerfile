@@ -51,6 +51,8 @@ FROM base
 # Install packages needed for deployment (only runtime dependencies)
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libpq5 libvips && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install --no-install-recommends -y nodejs && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
